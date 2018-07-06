@@ -1,0 +1,43 @@
+package learn.cjb;
+
+class Solution {
+    public String decodeString(String s) {
+        int num = 0;
+        String sub = "";
+        int endIndex = 0;
+        String lastString = "";
+        String temp;
+        String subNumStr = "";
+        for(int i=s.length()-1; i >=0; i --){
+        	temp = s.substring(i, i+1);
+            if("[".equals(temp)){
+            	for (int j = i-1; j >= 0; j--) {
+            		char temp2 = s.charAt(j);
+					if(Character.isDigit(temp2)){
+						subNumStr = temp2 + subNumStr;
+						continue;
+					}else{
+						break;
+					}
+				}
+            	num = Integer.parseInt(subNumStr);
+                endIndex = s.indexOf("]", i);
+                sub = s.substring(i+1, endIndex);
+                for (int j = 0; j < num; j++) {
+					lastString += sub;
+				}
+                temp = s.substring(i- (num+"").length(), endIndex + 1);
+                s = s.replace(temp, lastString);
+                lastString = "";
+                subNumStr = "";
+                i = s.length()-1;
+            }
+        }
+        return s;
+    }
+    public static void main(String[] args) {
+		Solution solution = new Solution();
+		String result = solution.decodeString("100[leetcode]");
+		System.out.println(result);
+	}
+}
