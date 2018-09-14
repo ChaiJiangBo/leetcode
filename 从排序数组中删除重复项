@@ -37,7 +37,23 @@ public class RemoveDuplicates {
 		}
 		return nums.length - count;
 	}
-
+	/** 第二个方法
+	*/
+	public int removeDuplicates2(int[] nums) {
+		Integer[] a = new Integer[nums.length];
+		for (int i = 0; i < nums.length; i++) {
+			a[i] = nums[i];
+		}
+		List<Integer> list = Arrays.asList(a);
+		Set<Integer> set = new LinkedHashSet<Integer>(list);
+		Integer[] b = new Integer[set.size()];
+		set.toArray(b);
+		
+		for (int i = 0; i < b.length; i++) {
+			nums[i] = b[i];
+		}
+		return b.length;
+	}
 	/**
 	 * 
 	 */
