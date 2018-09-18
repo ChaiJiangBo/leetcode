@@ -1,0 +1,69 @@
+package leetcode.test.chaijb;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author Lrving 给定一个字符串和一个字符串字典，找到字典里面最长的字符串，该字符串可以通过删除给定字符串的某些字符来得到。
+ * 如果答案不止一个，返回长度最长且字典顺序最小的字符串。如果答案不存在，则返回空字符串。
+ */
+public class LongestWorld {
+    /**
+     * 说明
+     * @param s 一个字符串
+     * @param d 字典列表
+     * @return 字典中最长的匹配字符串
+     */
+    private String findLongestWord(String s, List<String> d) {
+        String longestWord = "";
+        for (String target : d) {
+            int len1 = longestWord.length();
+            int len2 = target.length();
+            if (len1 > len2 || (len1 == len2 && longestWord.compareTo(target) < 0))// 相对于target，当前的longestWord已经是最优解
+                continue;
+            if (isLegal(s, target))
+                longestWord = target;
+        }
+        return longestWord;
+    }
+
+    /**
+     * 遍历字符串
+     * @param s 结果
+     * @param target 临时
+     * @return 是否符合
+     */
+    private boolean isLegal(String s, String target) {
+        int j = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (j >= target.length())
+                break;// 如果target遍历完，跳出循环
+            if (s.charAt(i) == target.charAt(j)) {
+                j++;
+            }
+        }
+        return j == target.length();
+    }
+
+    /**
+     * @param args 参数
+     */
+    public static void main(String[] args) {
+        LongestWorld test = new LongestWorld();
+        /*
+          "aewfafwafjlwajflwajflwafj"
+          ["apple","ewaf","awefawfwaf","awef","awefe","ewafeffewafewf"]
+         */
+        String s = "aewfafwafjlwajflwajflwafj";
+        ArrayList<String> d = new ArrayList<String>();
+        d.add("apple");
+        d.add("ewaf");
+        d.add("awefawfwaf");
+        d.add("awef");
+        d.add("awefe");
+        d.add("ewafeffewafewf");
+        String result = test.findLongestWord(s, d);
+        System.out.println(result);
+    }
+
+}
